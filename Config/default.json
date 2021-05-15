@@ -1,0 +1,4 @@
+{
+    "MongoURI" : "mongodb+srv://ChatDB:ChatApp@MongoDB@cluster0.qjcf7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "jwtSecret" : "Secret JWT token"
+}
