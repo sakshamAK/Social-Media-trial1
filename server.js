@@ -19,4 +19,4 @@ app.use('/api/auth', require('./Routes/api/Auth'));
 app.use('/api/posts', require('./Routes/api/Posts'));
 
 
-app.listen(PORT, () => { console.log("Connecting to database...") });
+app.listen(PORT, () => { console.log("Started on port", PORT) });
