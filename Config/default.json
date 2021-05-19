@@ -1,4 +1,6 @@
 {
     "MongoURI" : "mongodb+srv://ChatDB:ChatApp@MongoDB@cluster0.qjcf7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-    "jwtSecret" : "Secret JWT token"
+    "jwtSecret" : "Secret JWT token",
+    "ClientID": "9c73c05ec2892ad31b33",
+    "githubSecret": "bc85ed886e409ce8dd41d991f207da5b5060ad3b"
 }
