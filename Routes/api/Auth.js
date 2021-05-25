@@ -10,11 +10,11 @@ const { check, validationResult } = require('express-validator');
 router.get('/', auth, async (req, res) => {
     // make call to database
     try {
-        const user = await User.findById(req.User.id).select('-password');
+        const user = await User.findById(req.user.id).select('-password');
         res.json(user);
     }
     catch(err) {
-        console.error(err.message);
+        console.error(err);
         res.status(500).send('server error');
     }
 });
@@ -46,8 +46,8 @@ router.post('/', [
 
             //return jsonwebtoken
             const payload = {
-                User: {
-                    id: User.id
+                user: {
+                    id: user.id
                 }
             }
             let jwtSecret = config.get('jwtSecret');

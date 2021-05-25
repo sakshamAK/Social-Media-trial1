@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 //creating wireframe for database
-const userSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -21,7 +21,11 @@ const userSchema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    profile: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Profile'
     }
 });
 
-module.exports = User = mongoose.model('User', userSchema);
+module.exports = User = mongoose.model('user', UserSchema);

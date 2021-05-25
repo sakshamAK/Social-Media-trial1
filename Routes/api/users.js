@@ -41,7 +41,7 @@ router.post('/', [
             })
 
             //creating new user data to be fed to the database
-            User = new User({
+            user = new User({
                 name,
                 email,
                 avatar,
@@ -53,12 +53,12 @@ router.post('/', [
             User.password = await bcrypt.hash(password, salt);
 
             //save user
-            await User.save();
+            await user.save();
 
             //return jsonwebtoken
             const payload = {
-                User: {
-                    id: User.id
+                user: {
+                    id: user.id
                 }
             }
             let jwtSecret = config.get('jwtSecret');

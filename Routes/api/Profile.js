@@ -12,8 +12,8 @@ const requestIt = require('request');
 //Check if profile exists or not
 router.get("/me", auth, async (req, res) => {
     try {
-        const profile = await Profile.findOne({ user: req.User.id }).populate(
-            "User",
+        const profile = await Profile.findOne({ user: req.user.id }).populate(
+            "user",
             ["name", "avatar"]
         );
         if (!profile) return res.status(400).send("No profile for this user");
@@ -29,7 +29,7 @@ router.get("/me", auth, async (req, res) => {
 //show all profiles
 router.get("/", async (req, res) => {
     try {
-        const profiles = await Profile.find().populate('User', ['name', 'avatar']);
+        const profiles = await Profile.find().populate('user', ['name', 'avatar']);
         res.json(profiles);
     } catch (err) {
         console.error(err.message);
@@ -41,7 +41,7 @@ router.get("/", async (req, res) => {
 //find profile
 router.get("/user/:user_id", async (req, res) => {
     try {
-        const profile = await Profile.findOne({ user: req.params.user_id }).populate('User', ['name', 'avatar']);
+        const profile = await Profile.findOne({ user: req.params.user_id }).populate('user', ['name', 'avatar']);
         res.json(profile);
 
         if (!profile) return res.status(400).json({ msg: "Profile not found" });
@@ -56,8 +56,8 @@ router.get("/user/:user_id", async (req, res) => {
 
 //delete account
 router.delete("/", auth, async (req, res) => {
-    await Profile.findOneAndDelete({ user: req.User.id });
-    await Profile.findOneAndDelete({ _id: req.User.id });
+    await Profile.findOneAndDelete({ user: req.user.id });
+    await Profile.findOneAndDelete({ _id: req.user.id });
     res.json({ msg: "Account deleted Successfully" });
 });
 
@@ -93,7 +93,7 @@ router.post(
 
         //profile object created
         const profileFields = {}
-        profileFields.user = req.User.id;
+        profileFields.user = req.user.id;
         if (company) profileFields.company = company;
         if (website) profileFields.website = website;
         if (location) profileFields.location = location;
@@ -113,9 +113,9 @@ router.post(
         try {
 
             //find and update
-            let profile = await Profile.findOne({ user: req.User.id });
+            let profile = await Profile.findOne({ user: req.user.id });
             if (profile) {
-                await Profile.findOneAndUpdate({ user: req.User.id }, { $set: profileFields }, { new: true });
+                await Profile.findOneAndUpdate({ user: req.user.id }, { $set: profileFields }, { new: true });
                 await profile.save();
                 return res.json(profile);
             }
@@ -140,7 +140,7 @@ router.put("/experience", [auth, [
 ]], async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.json({ errors: errors.array() });
-    let {
+    const {
         title,
         company,
         from,
@@ -150,7 +150,7 @@ router.put("/experience", [auth, [
         description
     } = req.body;
 
-    let newExp = {
+    const newExp = {
         title,
         company,
         from,
@@ -160,7 +160,8 @@ router.put("/experience", [auth, [
         description
     }
     try {
-        const profile = await Profile.findOne({ user: req.User.id });
+        const profile = await Profile.findOne({ user: req.user.id });
+        
         profile.experience.unshift(newExp);
         await profile.save();
         res.json(profile);
@@ -174,7 +175,7 @@ router.put("/experience", [auth, [
 //delete experience
 router.delete("/experience/:exp_id", auth, async (req, res) => {
     try {
-        const profile = await Profile.findOne(req.User.id);
+        const profile = await Profile.findOne(req.user.id);
         let removeIndex = profile.experience.map(item => item.id).indexOf(req.params.exp_id);
         profile.experience.splice(removeIndex, 1);
         await profile.save();
@@ -214,7 +215,7 @@ router.put("/education", [auth, [
         description
     }
     try {
-        const profile = await Profile.findOne({ user: req.User.id });
+        const profile = await Profile.findOne({ user: req.user.id });
         profile.education.unshift(newEdu);
         await profile.save();
         res.json(profile);
@@ -228,7 +229,7 @@ router.put("/education", [auth, [
 //delete education
 router.delete("/education/:edu_id", auth, async (req, res) => {
     try {
-        const profile = await Profile.findOne(req.User.id);
+        const profile = await Profile.findOne(req.user.id);
         let removeIndex = profile.education.map(item => item.id).indexOf(req.params.edu_id);
         profile.education.splice(removeIndex, 1);
         await profile.save();
