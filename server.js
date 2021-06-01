@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 const connectDB = require("./config/db");
 
 //connected database from db.js
@@ -9,7 +9,7 @@ app.use(express.json({ extended: false }));
 
 //sendibg basic request to check server activity
 app.get('/', (req, res) => {
-    res.send("API running...");
+    res.json({age : '2'});
 });
 
 //Define routes
