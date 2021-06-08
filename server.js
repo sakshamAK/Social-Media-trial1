@@ -7,7 +7,7 @@ const connectDB = require("./config/db");
 connectDB();
 app.use(express.json({ extended: false }));
 
-//sendibg basic request to check server activity
+//sending basic request to check server activity
 app.get('/', (req, res) => {
     res.json({age : '2'});
 });
