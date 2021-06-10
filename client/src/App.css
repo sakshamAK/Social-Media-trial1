@@ -155,6 +155,9 @@ img {
   background: var(--light-color);
   color: #333;
 }
+.alert:nth-of-type(1) {
+  margin-top: 100px;
+}
 
 .btn-primary,
 .bg-primary,
@@ -305,6 +308,7 @@ button {
   align-items: center;
   padding: 0.7rem 2rem;
   position: fixed;
+  margin-bottom: 50px;
   z-index: 1;
   width: 100%;
   top: 0;
