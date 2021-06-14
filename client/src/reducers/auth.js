@@ -7,7 +7,7 @@ const initialState = {
     user: null 
 }
 
-export default function(state = initialState, actions) {
+export default function register(state = initialState, actions) {
     const { type, payload } = actions;
 
     switch(type) {
