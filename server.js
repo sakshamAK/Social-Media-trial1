@@ -7,9 +7,17 @@ const connectDB = require("./config/db");
 connectDB();
 app.use(express.json({ extended: false }));
 
+app.use((req, res, next) => {
+    res.append('Access-Control-Allow-Origin', ['*']);
+    res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.append('Access-Control-Allow-Headers', 'Content-Type');
+    res.append('Access-Control-Allow-Headers', 'x-auth-token');
+    next();
+});
+
 //sending basic request to check server activity
 app.get('/', (req, res) => {
-    res.json({age : '2'});
+    console.log("server active");
 });
 
 //Define routes

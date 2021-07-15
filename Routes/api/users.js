@@ -30,8 +30,7 @@ router.post('/', [
 
             //if exists then
             if (user) return res.status(400).json({ errors: [{ msg: 'User already exists' }] });
-            console.log(req.body);
-
+            
             //gravatar profile
 
             const avatar = gravatar.url(email, {
